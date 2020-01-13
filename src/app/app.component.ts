@@ -40,12 +40,9 @@ export class AppComponent {
       var celerityForZeroDepth : number;
 
       celerityForZeroDepth = this.mckenzieEquationService.calculateCelerity(this.rangeTemperature,this.rangeSalinity,0);
-
       const posY = 0 * 256 / 8000; 
-      //const posX = (celerityForZeroDepth) * 250 / 1800;
-      const posX = (celerityForZeroDepth-1400) * 256 / 400; 
-      // TODO faire un produit en croix entre celerityForZeroDepth et 250 et entre depth et 250
-
+      const posX = (celerityForZeroDepth-1400) * 256 / 400; // 400 is the difference between the celerity min 1400 and the max 1800
+      
       // we add 30 pixels for moving the graph to the right
       const soundPointForZeroDepth = new SoundPoint(this.rangeTemperature,this.rangeSalinity,0,celerityForZeroDepth,posX+30,posY);
       this.soundPoints.push(soundPointForZeroDepth);
@@ -56,12 +53,7 @@ export class AppComponent {
     this.pointExist = true;
     var celerity : number;
     celerity = this.mckenzieEquationService.calculateCelerity(this.rangeTemperature,this.rangeSalinity,this.rangeDepth);
-
-  // TODO faire un produit en croix entre celerityForZeroDepth et 250 et entre depth et 250
-
-
     const posY = this.rangeDepth * 256 / 8000; 
-    //const posX = celerity * 250 / 1800;
     const posX = (celerity-1400) * 256 / 400; 
     // we add 30 pixels for moving the graph to the right
     const soundPoint = new SoundPoint(this.rangeTemperature,this.rangeSalinity,this.rangeDepth,celerity,posX+30,posY);

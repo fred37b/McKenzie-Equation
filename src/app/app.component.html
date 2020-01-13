@@ -1,112 +1,113 @@
 <h1 >{{ name }}</h1>
-<p>
-  This page is dedicated the the <a href="https://www.researchgate.net/scientific-contributions/2016510725_Kenneth_V_MacKenzie">Kenneth V. McKenzie</a> <a href="https://en.wikipedia.org/wiki/Speed_of_sound#Seawater">'s equation</a>  for calculating the celerity of the sound in seawater.
-</p>
+<h6>
+  <p>
+  This page is dedicated the the <a href="https://www.researchgate.net/scientific-contributions/2016510725_Kenneth_V_MacKenzie">Kenneth V. McKenzie</a> <a href="https://en.wikipedia.org/wiki/Speed_of_sound#Seawater">'s equation</a>  for calculating the celerity of the sound in seawater. The celerity depend in the temperature, the salinity and the depth where the sound is moving.
+  </p>
+  <p>celerity(D,S,T) = 1448.96 + 4.591T - 5.304 x 10<sup>-2</sup>T<sup>2</sup>&nbsp;+ 
+		2.374 x 10<sup>-4</sup>T<sup>3</sup>&nbsp;+ 1.340 (S-35) + 1.630 x 10<sup>-2</sup>D 
+		+ 1.675 x 10<sup>-7</sup>D<sup>2</sup>&nbsp;- 1.025 x 10<sup>-2</sup>T(S - 
+		35) - 7.139 x 10<sup>-13</sup>TD<sup>3</sup>
+  </p>
+  <p>The source are available on <a href="https://github.com/fred37b/McKenzie-Equation">my Github repository</a></p>
+</h6>
 <!--
-  http://www.tsuchiya2.org/soundspeed/mac.htm
-  https://www.maths-forum.com/superieur/equation-inverse-mckenzie-t148588.html
- -->
-<div class="row" style="margin :10px;">
-    <div class="col-xs-5" style="margin :5px;">
-        <div class="form-group">
-          <label for="formControlRange">T = temperature in degrees Celsius : {{rangeTemperature}}</label>
-          <input type="range" class="form-control-range" min="2" max="30" value="3" step="1" id="rangeTemperature" [(ngModel)]="rangeTemperature">
-        </div>
-        <div class="form-group">
-          <label for="formControlRange">S = salinity in parts per thousand : {{rangeSalinity}}</label>
-          <input type="range" class="form-control-range" min="25" max="40" value="26" step="1" id="rangeSalinity" [(ngModel)]="rangeSalinity">
-        </div>
-        <div class="form-group">
-          <label for="formControlRange">D = depth in metres : {{rangeDepth}}</label>
-          <input type="range" class="form-control-range" min="0" max="8000" value="1" step="1" id="rangeDepth" [(ngModel)]="rangeDepth">
-        </div>
-      <div class="row">
-        <button class="btn btn-primary" style="margin :2px;" (click)="addAPoint()">Add a point</button>
-        <button class="btn btn-outline-danger" style="margin :2px;" (click)="deleteLastPoint()">Delete last point</button>
-        <button class="btn btn-outline-danger" style="margin :2px;" (click)="resetListOfPoints()">Delete all points</button>
-      </div>
-      <table class="table" *ngIf="pointExist" style="margin : 15px;">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Temp</th>
-            <th scope="col">Salinity</th>
-            <th scope="col">Depth</th>
-            <th scope="col">Celerity</th>
-            <th scope="col">X</th>
-            <th scope="col">Y</th>
-            <th scope="col">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let soundPoint of soundPoints; let i = index;">
-            <td>{{i+1}}</td>
-            <td>{{soundPoint.temperatur}}</td>
-            <td>{{soundPoint.salinity}}</td>
-            <td>{{soundPoint.depth}}</td>
-            <td>{{soundPoint.celerity}}</td>
-            <td>{{soundPoint.posX}}</td>
-            <td>{{soundPoint.posY}}</td>
-            <td><button class="btn btn-outline-danger" style="margin :2px;" (click)="deleteThisPoint(soundPoint)">X</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- component - elements previous must be put in an element -->
-      <!--
-      <app-table-points></app-table-points>
-      -->
+<div class="row">
+  <div class="col-sm-4">Largeur 4</div>
+  <div class="col-sm-8">Largeur 8</div>
+</div>
+-->
+<div id="mainRow" class="row">
+  <div class="col-sm-auto">
+    <div class="form-group">
+      <label for="formControlRange">T = temperature in degrees Celsius : {{rangeTemperature}}</label>
+      <input type="range" class="form-control-range" min="2" max="30" value="3" step="1" id="rangeTemperature" [(ngModel)]="rangeTemperature">
     </div>
-
-<!-- https://stackoverflow.com/questions/53398223/angular-svg-dynamically-create-circles-in-an-svg
-https://stackoverflow.com/questions/53398223/angular-svg-dynamically-create-circles-in-an-svg -->
-
-    <div class="col-xs-7" style="margin :5px;">
-
-      <svg id="lines" viewBox="0 0 320 300">
-
-          <line *ngFor="let soundPoint of soundPoints.slice(1); let i = index;"  class="line" [attr.x1]="soundPoints[i].posX" [attr.y1]="soundPoints[i].posY" [attr.x2]="soundPoints[i+1].posX" [attr.y2]="soundPoints[i+1].posY" style="stroke:rgb(125,125,0);stroke-width:0.5"/>
-
-          <!-- axe des y-->
-          <line x1="30" y1="0" x2="30" y2="256" style="stroke:rgb(0,0,0);stroke-width:1" />
-          <!-- axe des x-->
-          <line x1="30" y1="256" x2="286" y2="256" style="stroke:rgb(0,0,0);stroke-width:1" />
-
-          <line x1="30" y1="256" x2="30" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="62" y1="256" x2="62" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="94" y1="256" x2="94" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="126" y1="256" x2="126" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="158" y1="256" x2="158" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="190" y1="256" x2="190" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="222" y1="256" x2="222" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="254" y1="256" x2="254" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="286" y1="256" x2="286" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
-
-          <text fill="#000000" font-size="8" font-family="Verdana" x="288" y="266">Speed</text>
-
-          <text fill="#000000" font-size="8" font-family="Verdana" x="17" y="276">1400</text>
-          <text fill="#000000" font-size="8" font-family="Verdana" x="148" y="276">1600</text>
-          <text fill="#000000" font-size="8" font-family="Verdana" x="280" y="276">1800</text>
-
-          <!-- legend of depth -->
-          <line x1="20" y1="32" x2="30" y2="32" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="64" x2="30" y2="64" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="96" x2="30" y2="96" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="128" x2="30" y2="128" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="160" x2="30" y2="160" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="192" x2="30" y2="192" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="224" x2="30" y2="224" style="stroke:rgb(255,0,0);stroke-width:1" />
-          <line x1="20" y1="256" x2="30" y2="256" style="stroke:rgb(255,0,0);stroke-width:1" />
-
-          <text fill="#000000" font-size="8" font-family="Verdana" x="0" y="8">Depth</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="34">1k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="62">2k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="98">3k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="130">4k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="162">5k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="194">6k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="226">7k</text>
-          <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="258">8k</text>
-
-          </svg>
+    <div class="form-group">
+      <label for="formControlRange">S = salinity in parts per thousand : {{rangeSalinity}}</label>
+      <input type="range" class="form-control-range" min="25" max="40" value="26" step="1" id="rangeSalinity" [(ngModel)]="rangeSalinity">
     </div>
+    <div class="form-group">
+      <label for="formControlRange">D = depth in metres : {{rangeDepth}}</label>
+      <input type="range" class="form-control-range" min="0" max="8000" value="1" step="1" id="rangeDepth" [(ngModel)]="rangeDepth">
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" style="margin :2px;" (click)="addAPoint()">Add a point</button>
+      <button class="btn btn-outline-danger" style="margin :2px;" (click)="deleteLastPoint()">Delete last point</button>
+      <button class="btn btn-outline-danger" style="margin :2px;" (click)="resetListOfPoints()">Delete all points</button>
+    </div>
+    <table class="table" *ngIf="pointExist" style="margin : 15px;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Temp</th>
+          <th scope="col">Salinity</th>
+          <th scope="col">Depth</th>
+          <th scope="col">Celerity</th>
+          <th scope="col">X</th>
+          <th scope="col">Y</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let soundPoint of soundPoints; let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{soundPoint.temperatur}}</td>
+          <td>{{soundPoint.salinity}}</td>
+          <td>{{soundPoint.depth}}</td>
+          <td>{{soundPoint.celerity}}</td>
+          <td>{{soundPoint.posX}}</td>
+          <td>{{soundPoint.posY}}</td>
+          <td><button class="btn btn-outline-danger" style="margin :2px;" (click)="deleteThisPoint(soundPoint)">X</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <div id="graphDiv" class="col-sm-auto">
+    <svg id="lines" xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 320 300">
+
+      <line *ngFor="let soundPoint of soundPoints.slice(1); let i = index;"  class="line" [attr.x1]="soundPoints[i].posX" [attr.y1]="soundPoints[i].posY" [attr.x2]="soundPoints[i+1].posX" [attr.y2]="soundPoints[i+1].posY" style="stroke:rgb(125,125,0);stroke-width:0.5"/>
+
+      <!-- axe des y-->
+      <line x1="30" y1="0" x2="30" y2="256" style="stroke:rgb(0,0,0);stroke-width:1" />
+      <!-- axe des x-->
+      <line x1="30" y1="256" x2="286" y2="256" style="stroke:rgb(0,0,0);stroke-width:1" />
+
+      <line x1="30" y1="256" x2="30" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="62" y1="256" x2="62" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="94" y1="256" x2="94" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="126" y1="256" x2="126" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="158" y1="256" x2="158" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="190" y1="256" x2="190" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="222" y1="256" x2="222" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="254" y1="256" x2="254" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="286" y1="256" x2="286" y2="266" style="stroke:rgb(255,0,0);stroke-width:1" />
+
+      <text fill="#000000" font-size="8" font-family="Verdana" x="288" y="266">Speed</text>
+      <text fill="#000000" font-size="8" font-family="Verdana" x="19" y="276">1400</text>
+      <text fill="#000000" font-size="8" font-family="Verdana" x="83" y="276">1500</text>
+      <text fill="#000000" font-size="8" font-family="Verdana" x="148" y="276">1600</text>
+      <text fill="#000000" font-size="8" font-family="Verdana" x="211" y="276">1700</text>
+      <text fill="#000000" font-size="8" font-family="Verdana" x="275" y="276">1800</text>
+
+      <!-- legend of depth -->
+      <line x1="20" y1="32" x2="30" y2="32" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="20" y1="64" x2="30" y2="64" style="stroke:rgba(255, 0, 0, 0.705);stroke-width:1" />
+      <line x1="20" y1="96" x2="30" y2="96" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="20" y1="128" x2="30" y2="128" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="20" y1="160" x2="30" y2="160" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="20" y1="192" x2="30" y2="192" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="20" y1="224" x2="30" y2="224" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <line x1="20" y1="256" x2="30" y2="256" style="stroke:rgb(255,0,0);stroke-width:1" />
+      <!-- label of depth -->
+      <text fill="#000000" font-size="8" font-family="Verdana" x="0" y="8">Depth</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="34">1k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="62">2k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="98">3k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="130">4k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="162">5k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="194">6k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="226">7k</text>
+      <text fill="#000000" font-size="10" font-family="Verdana" x="0" y="258">8k</text>
+      </svg>
+  </div>
+</div>
