@@ -3,7 +3,7 @@
   <p>
   This page is dedicated the the <a href="https://www.researchgate.net/scientific-contributions/2016510725_Kenneth_V_MacKenzie">Kenneth V. McKenzie</a> <a href="https://en.wikipedia.org/wiki/Speed_of_sound#Seawater">'s equation</a>  for calculating the celerity of the sound in seawater. The celerity depend in the temperature, the salinity and the depth where the sound is moving.
   </p>
-  <p>celerity(D,S,T) = 1448.96 + 4.591T - 5.304 x 10<sup>-2</sup>T<sup>2</sup>&nbsp;+ 
+  <p>celerity(D,S,T) Meter by second = 1448.96 + 4.591T - 5.304 x 10<sup>-2</sup>T<sup>2</sup>&nbsp;+ 
 		2.374 x 10<sup>-4</sup>T<sup>3</sup>&nbsp;+ 1.340 (S-35) + 1.630 x 10<sup>-2</sup>D 
 		+ 1.675 x 10<sup>-7</sup>D<sup>2</sup>&nbsp;- 1.025 x 10<sup>-2</sup>T(S - 
 		35) - 7.139 x 10<sup>-13</sup>TD<sup>3</sup>
@@ -17,7 +17,7 @@
 </div>
 -->
 <div id="mainRow" class="row">
-  <div class="col-sm-auto">
+  <div id="tabDiv" class="col-sm-auto">
     <div class="form-group">
       <label for="formControlRange">T = temperature in degrees Celsius : {{rangeTemperature}}</label>
       <input type="range" class="form-control-range" min="2" max="30" value="3" step="1" id="rangeTemperature" [(ngModel)]="rangeTemperature">

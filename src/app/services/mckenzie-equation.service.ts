@@ -14,10 +14,8 @@ export class MckenzieEquationService {
   a9: number = 7.139;
 
   calculateCelerity(t: number,s: number,d: number) {
-    let result : number;
-    
+    let result : number; 
     result = this.a1 + (this.a2 * t) - (this.a3 * Math.pow(10,-2) * Math.pow(t,2)) + (this.a4 * Math.pow(10,-4) * Math.pow(t,3)) + (this.a5 * (s-35)) + (this.a6 * Math.pow(10,-2) * d) + (this.a7 * Math.pow(10,-7) * Math.pow(d,2)) - (this.a8 * Math.pow(10,-2) * t * (s-35)) - (this.a9 * Math.pow(10,-13) * t * Math.pow(d,3));
-
     console.log("calculate celerity :"+result);
     return result;
   }

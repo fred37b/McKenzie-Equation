@@ -38,11 +38,9 @@ export class AppComponent {
     if((this.rangeDepth != 0)&&(this.soundPoints.length ==0)){
       console.log("depth is 0");
       var celerityForZeroDepth : number;
-
-      celerityForZeroDepth = this.mckenzieEquationService.calculateCelerity(this.rangeTemperature,this.rangeSalinity,0);
-      const posY = 0 * 256 / 8000; 
-      const posX = (celerityForZeroDepth-1400) * 256 / 400; // 400 is the difference between the celerity min 1400 and the max 1800
-      
+      celerityForZeroDepth = Math.trunc(this.mckenzieEquationService.calculateCelerity(this.rangeTemperature,this.rangeSalinity,0));
+      const posY = Math.trunc(0 * 256 / 8000); 
+      const posX = Math.trunc((celerityForZeroDepth-1400) * 256 / 400); // 400 is the difference between the celerity min 1400 and the max 1800
       // we add 30 pixels for moving the graph to the right
       const soundPointForZeroDepth = new SoundPoint(this.rangeTemperature,this.rangeSalinity,0,celerityForZeroDepth,posX+30,posY);
       this.soundPoints.push(soundPointForZeroDepth);
@@ -50,11 +48,12 @@ export class AppComponent {
       console.log("depth is greater than 0");
     }
 
+
     this.pointExist = true;
     var celerity : number;
-    celerity = this.mckenzieEquationService.calculateCelerity(this.rangeTemperature,this.rangeSalinity,this.rangeDepth);
-    const posY = this.rangeDepth * 256 / 8000; 
-    const posX = (celerity-1400) * 256 / 400; 
+    celerity = Math.trunc(this.mckenzieEquationService.calculateCelerity(this.rangeTemperature,this.rangeSalinity,this.rangeDepth));
+    const posY = Math.trunc(this.rangeDepth * 256 / 8000); 
+    const posX = Math.trunc((celerity-1400) * 256 / 400); 
     // we add 30 pixels for moving the graph to the right
     const soundPoint = new SoundPoint(this.rangeTemperature,this.rangeSalinity,this.rangeDepth,celerity,posX+30,posY);
     this.soundPoints.push(soundPoint);
@@ -88,6 +87,12 @@ export class AppComponent {
    */
   deleteThisPoint(soundPoint : SoundPoint){
     const lenght = this.soundPoints.length;
-     this.soundPoints.splice(lenght,1);
+    
+    const index = this.soundPoints.indexOf(soundPoint, 0);
+    if (index > -1) {
+      this.soundPoints.splice(index, 1);
+    }
+
+     //this.soundPoints.splice(lenght,1);
   }
 }
