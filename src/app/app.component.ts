@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {SoundPoint} from '../app/models/soundpoint.model';
 import { MckenzieEquationService } from '../app/services/mckenzie-equation.service';
+import {ExcelService} from './services/excel.service';
+import * as svg from 'save-svg-as-png';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +19,24 @@ export class AppComponent {
   rangeDepth : number;
   pointExist : boolean;
 
+  data: any = [{
+    eid: 'e101',
+    ename: 'ravi',
+    esal: 1000
+    },{
+    eid: 'e102',
+    ename: 'ram',
+    esal: 2000
+    },{
+    eid: 'e103',
+    ename: 'rajesh',
+    esal: 3000
+    }];
+
+
 // https://stackoverflow.com/questions/41726168/see-input-range-value-as-it-changes-with-angular-2
 
-  constructor(private mckenzieEquationService: MckenzieEquationService){
+  constructor(private mckenzieEquationService: MckenzieEquationService, private excelService: ExcelService){
     this.pointExist = false;
     this.rangeTemperature = 3;
     this.rangeSalinity = 35;
@@ -67,6 +84,25 @@ export class AppComponent {
   resetListOfPoints(){
     this.pointExist = false;
     this.soundPoints = [];
+  }
+
+  export(){
+    console.log("export as sheet https://medium.com/@madhavmahesh/exporting-an-excel-file-in-angular-927756ac9857");
+    this.excelService.exportAsExcelFile(this.soundPoints, 'sample');
+  }
+
+  /**
+   * 
+   */
+  saveGraph(){
+
+//https://stackoverflow.com/questions/54588193/how-to-use-save-svg-as-png-with-angular-6
+    
+    svg.saveSvgAsPng(document.getElementById("lines"), "diagram.png", {scale: 2.0});
+
+    svg.saveSvgAsPng(document.getElementById('lines'), "diagram.png", {scale: 0.5}, (uri) => {
+      console.log('png base 64 encoded', uri);
+    });
   }
 
   /**
